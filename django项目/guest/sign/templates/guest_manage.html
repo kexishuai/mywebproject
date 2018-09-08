@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+{% load static %}
+{% load bootstrap3 %}
+{% bootstrap_css %}
+{% bootstrap_javascript %}
+
+<title>嘉宾</title>
+<style>
+    #icon>li>a>span, #icon>li>a>img{
+        display: block;
+        width: 2rem;
+        height: 2rem;
+        float: left;
+        margin: 0 0.3rem 0;
+        font-size: 1.5rem;
+        color: black;
+        background: white;
+        text-align: center;
+        border-radius: 50%;
+        line-height: 1.8rem;
+    }
+</style>
+</head>
+<body>
+<nav class="navbar navbar-default">
+  <div class="container-fluid">
+    <!-- Brand and toggle get grouped for better mobile display -->
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="#">客户管理系统</a>
+    </div>
+
+    <!-- Collect the nav links, forms, and other content for toggling -->
+    <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+      <ul class="nav navbar-nav">
+        <li><a href="{% url 'sign:event' %}">发布会 <span class="sr-only">(current)</span></a></li>
+        <li class="active"><a href="#">嘉宾<span class="sr-only">(current)</span></a></li>
+
+      </ul>
+{#        搜索框#}
+{#      <form class="navbar-form navbar-left">#}
+{#        <div class="form-group">#}
+{#          <input type="text" class="form-control" placeholder="Search">#}
+{#        </div>#}
+{#        <button type="submit" class="btn btn-default">搜索</button>#}
+{#      </form>#}
+      <ul id="icon" class="nav navbar-nav navbar-right">
+        <li><a href="#">{{ username}}
+         {% if icon %}
+              <img src="{% static icon %}">
+         {% else %}
+             <span class="glyphicon glyphicon-user"></span>
+         {% endif %}
+        欢迎您！
+        </a></li>
+        <li><a href="{% url 'sign:log_out' %}">退出</a></li>
+{#        <li class="dropdown">#}
+{#          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Dropdown <span class="caret"></span></a>#}
+{#          <ul class="dropdown-menu">#}
+{#            <li><a href="#">Action</a></li>#}
+{#            <li><a href="#">Another action</a></li>#}
+{#            <li><a href="#">Something else here</a></li>#}
+{#            <li role="separator" class="divider"></li>#}
+{#            <li><a href="#">Separated link</a></li>#}
+{#          </ul>#}
+{#        </li>#}
+      </ul>
+    </div><!-- /.navbar-collapse -->
+  </div><!-- /.container-fluid -->
+</nav>
+
+
+{#发布会搜索表单#}
+<div class="page-header">
+    <div id="navbar" class="navbar-collapse collapse">
+        <form class="navbar-form" method="get" action="/sign/sreach_name/">
+            <div class="form-group">
+                <input name="name" type="text" placeholder="名称" class="form-control" >
+
+            </div>
+            <button type="submit" class="btn btn-success">搜索</button>
+
+        </form>
+    </div>
+
+</div>
+
+
+
+{#嘉宾列表#}
+<div class="row">
+    <div class="col-md-6">
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th>id</th><th>名称</th><th>手机</th><th>Email</th><th>签到</th><th>发布会</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for guest in page.object_list %}
+                    <tr>
+                        <td>{{ guest.id }}</td>
+                        <td>{{ guest.realname }}</td>
+                        <td>{{ guest.phone }}</td>
+                        <td>{{ guest.email }}</td>
+                        <td>{{ guest.sign }}</td>
+                        <td>{{ guest.event }}</td>
+                    </tr>
+                {% endfor %}
+
+            </tbody>
+        </table>
+    </div>
+</div>
+
+
+{#分页#}
+<nav aria-label="Page navigation">
+    <ul class="pagination">
+        <li>
+            {% if page.has_previous %}
+                <a href="{% url 'sign:guest_manage' page.previous_page_number %}" aria-label="Previous">
+                    <span aria-hidden="true">&laquo;</span>
+                </a>
+            {% else %}
+                <a href="#" aria-label="Previous">
+                    <span aria-hidden="true">&laquo;</span>
+                </a>
+            {% endif %}
+
+
+        </li>
+        {#    <li><a href="#">1</a></li>#}
+        {#    <li><a href="#">2</a></li>#}
+        {#    <li><a href="#">3</a></li>#}
+        {#    <li><a href="#">4</a></li>#}
+        {#    <li><a href="#">5</a></li>#}
+        {% for pnum in page_range %}
+            {% if pnum == page.number %}
+                <li class="active">
+                    {% else %}
+                <li>
+            {% endif %}
+        <a href="{% url 'sign:guest_manage' pnum %}">{{ pnum }}</a>
+        </li>
+
+        {% endfor %}
+        <li>
+            {% if page.has_next %}
+                <a href="{% url 'sign:guest_manage' page.next_page_number %}" aria-label="Next">
+                    <span aria-hidden="true">&raquo;</span>
+                </a>
+            {% else %}
+                <a href="#" aria-label="Next">
+                    <span aria-hidden="true">&raquo;</span>
+                </a>
+            {% endif %}
+
+        </li>
+    </ul>
+</nav>
+
+</body>
+</html>

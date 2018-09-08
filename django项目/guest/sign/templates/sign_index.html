@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+{% load static %}
+{% load bootstrap3 %}
+{% bootstrap_css %}
+{% bootstrap_javascript %}
+
+<title>发布会</title>
+<style>
+    #icon>li>a>span, #icon>li>a>img{
+        display: block;
+        width: 2rem;
+        height: 2rem;
+        float: left;
+        margin: 0 0.3rem 0;
+        font-size: 1.5rem;
+        color: black;
+        background: white;
+        text-align: center;
+        border-radius: 50%;
+        line-height: 1.8rem;
+    }
+</style>
+</head>
+<body>
+<nav class="navbar navbar-default">
+  <div class="container-fluid">
+    <!-- Brand and toggle get grouped for better mobile display -->
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="#">{{ eventname }}</a>
+    </div>
+
+    <!-- Collect the nav links, forms, and other content for toggling -->
+    <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+      <ul class="nav navbar-nav">
+        <li class="active"><a href="#">发布会 <span class="sr-only">(current)</span></a></li>
+        <li><a href="{% url 'sign:guest'  %}">嘉宾<span class="sr-only">(current)</span></a></li>
+      </ul>
+{#        搜索框#}
+{#      <form class="navbar-form navbar-left">#}
+{#        <div class="form-group">#}
+{#          <input type="text" class="form-control" placeholder="Search">#}
+{#        </div>#}
+{#        <button type="submit" class="btn btn-default">搜索</button>#}
+{#      </form>#}
+      <ul id='icon' class="nav navbar-nav navbar-right">
+        <li><a href="#">{{ username}}
+         {% if icon %}
+              <img src="{% static icon %}">
+         {% else %}
+             <span class="glyphicon glyphicon-user"></span>
+         {% endif %}
+        欢迎您！
+        </a></li>
+
+        <li><a href="{% url 'sign:log_out' %}">退出</a></li>
+
+      </ul>
+    </div><!-- /.navbar-collapse -->
+  </div><!-- /.container-fluid -->
+</nav>
+
+
+{#发布会搜索表单#}
+<div class="page-header">
+    <div id="navbar" class="navbar-collapse collapse">
+        <form class="navbar-form" method="post" action="{% url 'sign:sign_action' eventid %}" >
+            {% csrf_token %}
+            <div class="form-group">
+                <input name="phone" type="text" placeholder="输入手机号" class="form-control" >
+            </div>
+            <button type="submit" class="btn btn-success">签到</button>
+        </form>
+        <p style="color: red;">{{ msg }}</p>
+    </div>
+
+</div>
+
+</body>
+</html>

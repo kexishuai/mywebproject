@@ -1,0 +1,16 @@
+{% extends 'base_main.html' %}
+{% load static %}
+
+{% block extCSS %}
+    {{ block.super }}
+    <link rel="stylesheet" href="{% static 'app/market/market.css' %}">
+{% endblock %}
+
+{% block extJS %}
+    <script src="{% static 'app/market/market.js' %}"></script>
+{% endblock %}
+
+{% block header %}
+    <header>
+        <div>购物车
+{% endblock %}

@@ -1,0 +1,49 @@
+*{
+	padding: 0px;
+	margin: 0px;
+}
+
+#box{
+	width:800px;
+	height: 350px;
+	margin: 0 auto;
+	position: relative;
+}
+
+#list{
+	position: absolute;
+	list-style: none;
+	height: auto;
+	left: 250px;
+	bottom: 20px;
+}
+#list li{
+	width:20px;
+	height: 20px;
+/*	display: block;*/
+	float:left;
+	text-align: center;
+	line-height: 20px;
+	margin-left: 10px;
+	background-color: lightcyan;
+	border-radius: 50%;
+}
+.btn{
+	position: absolute;
+	height: 80px;
+	width: 50px;
+	top:130px;
+	color: white;
+	font-size: 30px;
+	line-height: 80px;
+	text-align: center;
+	background-color: rgba(0,0,0,0.2);
+	/*display: none;*/
+}
+#leftbt{
+	left: 0px;
+}
+
+#rightbt{
+	right:10px;
+}
